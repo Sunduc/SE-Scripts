@@ -1,0 +1,40 @@
+
+public Program()
+{
+    Runtime.UpdateFrequency = UpdateFrequency.None;
+}
+public void Main(string argument, UpdateType updateSource)
+{
+
+    if (string.IsNullOrEmpty(argument)) return;
+
+    IMyTextSurface LCD = Me.GetSurface(0);
+    LCD.ContentType = VRage.Game.GUI.TextPanel.ContentType.TEXT_AND_IMAGE;
+
+    IMyTerminalBlock Block = GridTerminalSystem.GetBlockWithName(argument);
+    if (Block == null)
+    {
+        LCD.WriteText("Блок \"" + argument + "\" не найден!");
+        return;
+    }
+
+    LCD.WriteText(string.Format("Блок: \"{0}\"\n", argument));
+    LCD.WriteText(string.Format("Тип: {0}\n", Block.BlockDefinition.TypeIdString), true);
+    LCD.WriteText(string.Format("Подтип: {0}\n", Block.BlockDefinition.SubtypeId), true);
+
+    LCD.WriteText("======== Свойства ========\n", true);
+    List<ITerminalProperty> props = new List<ITerminalProperty>();
+    Block.GetProperties(props);
+    foreach (ITerminalProperty p in props)
+    {
+        LCD.WriteText(string.Format("  {0}  ({1})\n", p.Id, p.TypeName), true);
+    }
+
+    LCD.WriteText("======== Действия ========\n", true);
+    List<ITerminalAction> acts = new List<ITerminalAction>();
+    Block.GetActions(acts);
+    foreach (ITerminalAction a in acts)
+    {
+        LCD.WriteText(string.Format("  {0}  ({1})\n", a.Id, a.Name.ToString()), true);
+    }
+}
