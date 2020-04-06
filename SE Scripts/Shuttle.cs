@@ -464,7 +464,7 @@ namespace shuttle
                             JetList.ForEach(j => j.Enabled = false);
                         HThrustList.ForEach(h => SumThrust += h.CurrentThrust);
 
-                        if (Location.ShutUpThrusters(VelocityVector.Dot(-GravityVectorNorm)) >)
+                        //if (Location.ShutUpThrusters(VelocityVector.Dot(-GravityVectorNorm)) >)
                         if (VelocityVector.Length() >= 210 && SumThrust > NeedThrust)
                         {
                             HThrustList.ForEach(h => h.ThrustOverride = h.CurrentThrust - ((SumThrust - NeedThrust) / HThrustList.Count));
